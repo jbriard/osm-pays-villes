@@ -18,6 +18,7 @@ class CityData:
         self.center_lng: Optional[float] = None
         self.region_state: Optional[str] = None
         self.place_type: Optional[str] = None
+        self.country_code_from_tags: Optional[str] = None
 
 
 class CityParser(osmium.SimpleHandler):
@@ -49,10 +50,13 @@ class CityParser(osmium.SimpleHandler):
             city.center_lat = float(n.location.lat)
             city.center_lng = float(n.location.lon)
 
-            # Région/État
-            city.region_state = n.tags.get('addr:state') or n.tags.get('state')
+            # Région/État amélioré
+            city.region_state = self._extract_region_state(n.tags)
 
-            if city.name_local:  # Au minimum le nom local requis
+            # Code pays depuis les tags OSM
+            city.country_code_from_tags = self._extract_country_code(n.tags)
+
+            if city.name_local:
                 self.cities.append(city)
                 self.processed_count += 1
 
@@ -71,12 +75,10 @@ class CityParser(osmium.SimpleHandler):
         """Extrait les noms dans différentes langues."""
         tags = node.tags
 
-        # Priorité: name:fr → name:en → name
         city.name_fr = tags.get('name:fr')
         city.name_en = tags.get('name:en')
         city.name_local = tags.get('name', tags.get('name:en', tags.get('name:fr')))
 
-        # Display name
         city.display_name = (
             city.name_fr or
             city.name_en or
@@ -84,3 +86,60 @@ class CityParser(osmium.SimpleHandler):
             f"Ville {node.id}"
         )
 
+    def _extract_region_state(self, tags: Dict[str, str]) -> Optional[str]:
+        """Extrait la région/état avec plusieurs stratégies."""
+        region_tags = [
+            'addr:state',
+            'state',
+            'addr:province',
+            'province',
+            'addr:region',
+            'region',
+            'is_in:state',
+            'is_in:province',
+            'is_in:region'
+        ]
+
+        for tag in region_tags:
+            value = tags.get(tag)
+            if value and value.strip():
+                return value.strip()
+
+        # Parser is_in
+        is_in = tags.get('is_in')
+        if is_in:
+            parts = [part.strip() for part in is_in.split(',')]
+            if len(parts) >= 2:
+                return parts[-2]
+
+        return None
+
+    def _extract_country_code(self, tags: Dict[str, str]) -> Optional[str]:
+        """Extrait le code pays depuis les tags OSM."""
+        country_tags = [
+            'addr:country',
+            'country',
+            'addr:country_code',
+            'country_code',
+            'ISO3166-1:alpha2',
+            'is_in:country',
+            'is_in:country_code'
+        ]
+
+        for tag in country_tags:
+            value = tags.get(tag)
+            if value and value.strip():
+                country_code = value.strip().upper()
+                if len(country_code) == 2 and country_code.isalpha():
+                    return country_code
+
+        # Essayer is_in
+        is_in = tags.get('is_in')
+        if is_in:
+            parts = [part.strip() for part in is_in.split(',')]
+            if parts:
+                last_part = parts[-1].upper()
+                if len(last_part) == 2 and last_part.isalpha():
+                    return last_part
+
+        return None

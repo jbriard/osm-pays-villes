@@ -46,6 +46,7 @@ class City(Base):
     region_state = Column(String(255))
     timezone = Column(String(50))
     place_type = Column(String(50))
+    country_code_from_tags = Column(String(2), index=True)  # Nouveau champ
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
 

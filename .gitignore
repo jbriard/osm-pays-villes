@@ -1,0 +1,153 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.python-version
+venv_addresses/
+venv_addresses
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Pytest
+.pytest_cache/
+.cache
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+logs/
+
+# Docker
+.dockerignore
+
+# Configuration
+config/config.json
+config/config.prod.json
+.env.local
+.env.production
+.env.development
+secrets/
+
+# Backups
+*.bak
+*.backup
+
+# Temporary files
+tmp/
+temp/
+.tmp/
+
+# OS
+Thumbs.db
+Desktop.ini
+
+# Package managers
+node_modules/
+package-lock.json
+yarn.lock
+
+# Alembic
+# Attention: ne pas ignorer les fichiers de migration
+# migrations/versions/*.py doivent être versionnés
+
+# Documentation build
+docs/_build/
+site/
+
+# Pre-commit
+.pre-commit-config.local.yaml
+
+# Testing
+.tox/
+.nox/
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+.hypothesis/
+
+# Translations
+*.mo
+*.pot
+
+# Sphinx documentation
+docs/_build/
+
+# Backup files
+*~
+*.orig
+
+# Certificates
+*.pem
+*.key
+*.crt
+*.csr
+
+# Local development
+.local/
+local/
+
+# Mailuxon specific
+mailhog-data/
+postgres-data/

@@ -1,0 +1,25 @@
+database:
+  host: localhost
+  port: 5432
+  name: paysvilles
+  user: postgres
+  password: sasseTorche-culs75124
+
+import:
+  batch_size: 1000
+  num_workers: 4
+  simplification_tolerance: 0.01
+
+osm:
+  tags_countries:
+    - boundary=administrative
+    - admin_level=2
+  tags_cities:
+    - place=city
+    - place=town
+    - place=village
+    - place=hamlet
+
+logging:
+  level: INFO
+  file: import.log

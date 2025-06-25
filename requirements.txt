@@ -1,0 +1,14 @@
+asyncpg==0.29.0
+SQLAlchemy==2.0.23
+osmium==3.7.0
+timezonefinder==6.2.0
+pycountry==23.12.11
+rich==13.7.0
+click==8.1.7
+pydantic==2.5.2
+pydantic-settings==2.1.0
+PyYAML==6.0.1
+psycopg2-binary
+pydantic-settings
+asyncpg
+shapely
